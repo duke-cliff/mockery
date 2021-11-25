@@ -11,7 +11,7 @@ import (
 	"strings"
 
 	"github.com/rs/zerolog"
-	"github.com/vektra/mockery/v2/pkg/logging"
+	"github.com/duke-cliff/mockery/v2/pkg/logging"
 	"golang.org/x/tools/go/packages"
 )
 
