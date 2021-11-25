@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"os"
@@ -271,14 +272,22 @@ func (r *RootApp) Run() error {
 		LimitOne:  limitOne,
 		BuildTags: strings.Split(r.Config.BuildTags, " "),
 	}
-	log.Info().Msgf("Walker: %v+", walker)
-	log.Info().Msgf("Vistor: %v+", visitor)
+	log.Info().Msgf("Walker: %s", MustMarshalToString(walker))
+	log.Info().Msgf("Vistor: %s", MustMarshalToString(visitor))
 	generated := walker.Walk(ctx, visitor)
 
 	if r.Config.Name != "" && !generated {
 		log.Fatal().Msgf("Unable to find '%s' in any go files under this path", r.Config.Name)
 	}
 	return nil
+}
+
+func MustMarshalToString(v interface{}) string {
+	bytes, err := json.Marshal(v)
+	if err != nil {
+		panic(err)
+	}
+	return string(bytes)
 }
 
 type timeHook struct{}
