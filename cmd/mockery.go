@@ -271,7 +271,8 @@ func (r *RootApp) Run() error {
 		LimitOne:  limitOne,
 		BuildTags: strings.Split(r.Config.BuildTags, " "),
 	}
-
+	log.Info().Msgf("Walker: %v+", walker)
+	log.Info().Msgf("Vistor: %v+", visitor)
 	generated := walker.Walk(ctx, visitor)
 
 	if r.Config.Name != "" && !generated {
